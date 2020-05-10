@@ -77,6 +77,7 @@ function draw() {
 function setter(x){
   if (active && x ==1){
     console.log("one")
+    window.open('infant.html')
     active = false
   }
   if (active && x ==2){
