@@ -38,16 +38,13 @@ function preload(){
 }
 
 function setup() {
-  // const canvas = createCanvas(windowHeight / 3 * 4, windowHeight);
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('videoContainer');
   video = createCapture(VIDEO);
   video.size(width, height);
 
-  src = createVideo('video/iCatch1.mp4');
-
-  // Create the UI buttons
-  createButtons();
+  src = createVideo('video/tQuarrel1.mp4');
+  src.play();
 
   // Create a new poseNet method with a single detection
   poseNet = ml5.poseNet(video, modelReady);
@@ -56,24 +53,16 @@ function setup() {
   poseNet.on('pose', function(results) {
     poses = results;
   });
-
-  src.play();
-  // src.hide();
-
-  // video.hide();
 }
 
 function draw() {
   background(bg);
 
-
-  image(src, windowWidth/2 - windowHeight/32*9, 0, windowHeight/16*9, windowHeight);
+  image(src, windowWidth/2 - windowHeight/9*4, windowHeight/4, windowHeight/9*8, windowHeight/2);
   //mirror the video
   translate(video.width, 0)
   scale(-1.0, 1.0);
   
-  // image(video, -windowWidth/4, windowWidth/16*3 - windowHeight/2, windowWidth/2, windowWidth/8*3);
-
   stroke(226, 204, 0);
   strokeWeight(1);
   line(0, y, width, y);
