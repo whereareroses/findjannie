@@ -144,6 +144,26 @@ function createButtons() {
   button3.mousePressed(function() {
     addExample('3');
   });
+  button4 = select('#addClass4');
+  button4.mousePressed(function() {
+    addExample('4');
+  });
+  button5 = select('#addClass5');
+  button5.mousePressed(function() {
+    addExample('5');
+  });
+  button6 = select('#addClass6');
+  button6.mousePressed(function() {
+    addExample('6');
+  });
+  button7 = select('#addClass7');
+  button7.mousePressed(function() {
+    addExample('7');
+  });
+  button8 = select('#addClass8');
+  button8.mousePressed(function() {
+    addExample('8');
+  });
 
     // Reset buttons
     resetBtn1 = select('#reset1');
@@ -159,6 +179,34 @@ function createButtons() {
     resetBtn3 = select('#reset3');
     resetBtn3.mousePressed(function() {
       clearLabel('3');
+    });
+   resetBtn4 = select('#reset4');
+    resetBtn4.mousePressed(function() {
+      clearLabel('4');
+    });
+
+
+    resetBtn5 = select('#reset5');
+    resetBtn5.mousePressed(function() {
+      clearLabel('5');
+    });
+
+
+    resetBtn6 = select('#reset6');
+    resetBtn6.mousePressed(function() {
+      clearLabel('6');
+    });
+
+
+    resetBtn7 = select('#reset7');
+    resetBtn7.mousePressed(function() {
+      clearLabel('7');
+    });
+
+
+    resetBtn8 = select('#reset8');
+    resetBtn8.mousePressed(function() {
+      clearLabel('8');
     });
 
   // Predict button
@@ -177,27 +225,42 @@ function gotResults(error, result, targetLabel) {
     console.error(error);
   }
 
-  if (result.confidencesByLabel) {  
-    const confidences = result.confidencesByLabel;    
-    // result.label is the label that has the highest confidence
-    if (confidences){
-      console.log('this is the confidence:'+confidences);
-    }
-
-      if (result.label) {
-      select('#confidence').html(`${confidences[result.label] * 100} %`);
-    }
-    select('#confidence1').html(`${confidences['1'] ? confidences['1'] * 100 : 0} %`);
-    select('#confidence2').html(`${confidences['2'] ? confidences['2'] * 100 : 0} %`); 
-    select('#confidence3').html(`${confidences['3'] ? confidences['3'] * 100 : 0} %`);  
- 
-
+  if (result) {  
     if (result.label == 1) {
       print('hi3');
       src = createVideo('./video/tLaugh3.mp4');
       src.play();
       src.volume(0.3);
     }else if (result.label == 2 || result.label == 3) {
+      print('hi4');
+      var bgm1 = document.getElementById('bgm1');
+      bgm1.pause();
+      var bgm2 = document.getElementById('bgm2');
+      bgm2.play();
+      src = createVideo('./video/tQuarrel1.mp4');
+      src.play();
+      src.volume(0.3);
+    }else if (result.label == 4) {
+      print('hi5');
+      src = createVideo('./video/tQuarrel2.mp4');
+      src.play();
+      src.volume(0.3);
+    }else if (result.label == 5) {
+      print('hi6');
+      src = createVideo('./video/tQuarrel3.mp4');
+      src.play();
+      src.volume(0.3);
+    }else if (result.label == 6) {
+      print('hi7');
+      src = createVideo('./video/tQuarrel4.mp4');
+      src.play();
+      src.volume(0.3);
+    }else if (result.label == 7) {
+      print('hi8');
+      src = createVideo('./video/tQuarrel5.mp4');
+      src.play();
+      src.volume(0.3);
+    }else if (result.label == 8){
       print('bye');
       window.open('index.html');
       window.close();
@@ -217,6 +280,11 @@ function updateCounts() {
   select('#example1').html(counts['1'] || 0);
   select('#example2').html(counts['2'] || 0);
   select('#example3').html(counts['3'] || 0);
+  select('#example4').html(counts['4'] || 0);
+  select('#example5').html(counts['5'] || 0);
+  select('#example6').html(counts['6'] || 0);
+  select('#example7').html(counts['7'] || 0);
+  select('#example8').html(counts['8'] || 0);
 }
 
 // // Clear the examples in one label
