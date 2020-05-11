@@ -106,7 +106,7 @@ function drawKeypoints() {
   scale(-1.0, 1.0);
   // Draw the ellipse
   wristEllipse(rwx, rwy, 50);
-  print(rwx, rwy)
+  // print(rwx, rwy)
   
   if (rwx > 720 && rwx < 750 && rwy > 670 && rwy < 700) {
     print('hi2');

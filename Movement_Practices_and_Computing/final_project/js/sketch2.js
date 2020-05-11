@@ -59,7 +59,7 @@ function setup() {
 function draw() {
   background(bg);
 
-  image(src, width/2 - width/2.9, height/2 - height/2.6, width/1.4, height/1.3);
+  image(src, width/2 - width/3.1, height/2 - height/2.6, width/1.55, height/1.3);
   //mirror the video
   translate(video.width, 0)
   scale(-1.0, 1.0);
@@ -219,7 +219,7 @@ function createButtons() {
 }
    
 // Show the results
-function gotResults(error, result, targetLabel) {
+function gotResults(error, result) {
   // Display any error
   if (error) {
     console.error(error);
@@ -343,7 +343,7 @@ function drawKeypoints() {
   scale(-1.0, 1.0);
   // Draw the ellipse
   wristEllipse(rwx, rwy, 50);
-  print(rwx, rwy)
+  // print(rwx, rwy)
   
   if (rwx > 590 && rwx < 620 && rwy > 530 && rwy < 550) {
     print('hi2');
