@@ -82,6 +82,7 @@ function setter(x){
   }
   if (active && x ==2){
     console.log("two")
+    window.open('teens.html')
     active = false
   }
   if (active && x ==3){
