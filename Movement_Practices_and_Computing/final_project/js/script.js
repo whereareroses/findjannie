@@ -82,11 +82,12 @@ function setter(x){
   }
   if (active && x ==2){
     console.log("two")
-    window.open('teens.html')
+    window.open('teen.html')
     active = false
   }
   if (active && x ==3){
     console.log("three")
+    window.open('ending.html')
     active = false
   }
 

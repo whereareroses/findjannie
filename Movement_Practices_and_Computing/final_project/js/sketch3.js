@@ -51,6 +51,7 @@ function setup() {
   // This sets up an event that fills the global variable "poses"
   // with an array every time new poses are detected
   poseNet.on('pose', function(results) {
+    select('#bgm').play();
     poses = results;
   });
 }
@@ -207,7 +208,7 @@ function gotResults(error, result) {
       src = createVideo('./video/swim4.mp4');
       src.play();
       src.volume(0);
-    }else if (result.label == 5) {
+    }else if (result.label == 4) {
       print('bye');
       window.open('index.html');
       window.close();
