@@ -52,6 +52,7 @@ function setup() {
   // This sets up an event that fills the global variable "poses"
   // with an array every time new poses are detected
   poseNet.on('pose', function(results) {
+    select('#bgm1').play();
     poses = results;
   });
 }
@@ -89,7 +90,7 @@ function keyPressed(){
 function modelReady() {
   select('#status').html('model Loaded');
   knn = ml5.KNNClassifier()
-  knn.load('pose.json', function(){
+  knn.load('./json/pose.json', function(){
     console.log('data loaded');
     classify();
   });
@@ -160,10 +161,6 @@ function createButtons() {
   button7.mousePressed(function() {
     addExample('7');
   });
-  button8 = select('#addClass8');
-  button8.mousePressed(function() {
-    addExample('8');
-  });
 
     // Reset buttons
     resetBtn1 = select('#reset1');
@@ -201,12 +198,6 @@ function createButtons() {
     resetBtn7 = select('#reset7');
     resetBtn7.mousePressed(function() {
       clearLabel('7');
-    });
-
-
-    resetBtn8 = select('#reset8');
-    resetBtn8.mousePressed(function() {
-      clearLabel('8');
     });
 
   // Predict button
@@ -255,18 +246,16 @@ function gotResults(error, result) {
       src = createVideo('./video/tQuarrel4.mp4');
       src.play();
       src.volume(0.3);
-    }else if (result.label == 7) {
-      print('hi8');
+    }else if (result.label == 7){
       src = createVideo('./video/tQuarrel5.mp4');
       src.play();
       src.volume(0.3);
-    }else if (result.label == 8){
-      print('bye');
-      window.open('index.html');
-      window.close();
+      setInterval(function(){
+        print('bye');
+        window.open('index.html');
+        window.close();
+      },9000)
     }
-
-
   }
 
   classify();
@@ -345,7 +334,7 @@ function drawKeypoints() {
   wristEllipse(rwx, rwy, 50);
   // print(rwx, rwy)
   
-  if (rwx > 590 && rwx < 620 && rwy > 530 && rwy < 550) {
+  if (rwx > 720 && rwx < 730 && rwy > 530 && rwy < 540) {
     print('hi2');
     src = createVideo('./video/tLaugh2.mp4');
     src.play();

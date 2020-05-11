@@ -29,6 +29,7 @@ function setup() {
   video.size(width, height);
 
   src = createVideo('video/iCatch1.mp4');
+  src.volume(0);
   src.play();
 
   // Create a new poseNet method with a single detection
@@ -36,6 +37,7 @@ function setup() {
   // This sets up an event that fills the global variable "poses"
   // with an array every time new poses are detected
   poseNet.on('pose', function(results) {
+    select('#bgm').play();
     poses = results;
   });
 }
@@ -111,22 +113,27 @@ function drawKeypoints() {
   if (rwx > 720 && rwx < 750 && rwy > 670 && rwy < 700) {
     print('hi2');
     src = createVideo('./video/iCatch2.mp4');
+    src.volume(0);
     src.play();
   } else if (rwx > 580 && rwx < 610 && rwy > 660 && rwy < 690) {
     print('hi3');
     src = createVideo('./video/iCatch3.mp4');
+    src.volume(0);
     src.play();
   } else if (rwx > 700 && rwx < 720 && rwy > 250 && rwy < 270) {
     print('hi4');
     src = createVideo('./video/iCatch4.mp4');
+    src.volume(0);
     src.play();
   } else if (rwx > 470 && rwx < 490 && rwy > 430 && rwy < 450) {
     print('hi5');
     src = createVideo('./video/iCatch5.mp4');
+    src.volume(0);
     src.play();
   } else if (rwx > 630 && rwx < 650 && rwy > 340 && rwy < 360) {
     print('hi6');
     src = createVideo('./video/iCatch6.mp4');
+    src.volume(0);
     src.play();
   } else if (rwx > 480 && rwx < 500 && rwy > 270 && rwy < 280) {
     print('bye');
