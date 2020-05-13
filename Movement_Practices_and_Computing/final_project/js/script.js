@@ -2,23 +2,35 @@ let halo;
 let sensorData;
 let angle;
 let glowing;
+let ins;
 //for the gradient
 let c1, c2;
 //for the tail
 let c3, c4,c5;
 let active = true;
-
-
+let intro;
+let done = false;
+//for text blinking
+let i = 0;
 
 function preload() {
   glowing = loadImage("pic/glow.png")
   surface = loadImage("pic/light.png")
   coral = loadImage("pic/coral.png")
   fish = loadImage("pic/fish.png")
+  ins = loadSound("sound/first_ins.mp3")
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  //load and play the video
+  background(0)
+  intro = createVideo("video/epiphany_intro.mp4")
+  intro.size(windowWidth,windowHeight)
+  intro.position(0,0);
+  intro.play()
+  //hide it when done and start draw()
+  intro.onended(vidDone)
   imuConnection.onSensorData((device) => {
     sensorData = device.data;
 
@@ -37,11 +49,30 @@ function setup() {
 
 function draw() {
 
+if(done){
   setGradient(0, 0, windowWidth, windowHeight, c1, c2);
   noStroke();
   image(coral,0,windowHeight-300,300,300)
   image(fish,windowWidth-450,180,450,450)
-  image(surface,0,0,1500,600)
+  image(surface,0,0,windowWidth,600)
+
+    // create the blinking text
+    i = i + 1
+    // every 10th time, the condition is true
+    if (i % 10 === 0){
+      // fill with 50
+      fill(50)
+        .textSize(32);
+      textFont('Courier')
+      text('Swim to your desired places.',windowWidth/2-250,windowHeight-50);
+    } else {
+      // all the otehr times, fill with 255
+      fill(255)
+        .textSize(32);
+      textFont('Courier')
+      text('Swim to your desired places.',windowWidth/2-250,windowHeight-50);
+    }
+
 
 
   if(!sensorData){
@@ -70,7 +101,7 @@ function draw() {
     active = true
   }
 
-
+}
 
 
 }
@@ -92,6 +123,14 @@ function setter(x){
   }
 
 }
+//hide the video, play the audio
+function vidDone(){
+  done = true
+  intro.hide()
+  ins.play()
+}
+
+
 //class halo
 class Halo{
   constructor(x,y,angle){
