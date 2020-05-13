@@ -12,12 +12,16 @@ let intro;
 let done = false;
 //for text blinking
 let i = 0;
+//for the end
+let endNum = [];
+
 
 function preload() {
   glowing = loadImage("pic/glow.png")
   surface = loadImage("pic/light.png")
   coral = loadImage("pic/coral.png")
   fish = loadImage("pic/fish.png")
+  endPic = loadImage("pic/end.png")
   ins = loadSound("sound/first_ins.mp3")
 }
 
@@ -39,6 +43,7 @@ function setup() {
   halo = new Halo(550,550,90);
 
   // Define colors
+
   c1 = color(0, 53, 138);
   c2 = color(0);
   c3 = color(255);
@@ -103,22 +108,39 @@ if(done){
 }
 
 
+//if go through all go to end
+  var unique = endNum.filter( onlyUnique );
+  var array = [1,2,3]
+  if ((unique.length === array.length) &&
+    (unique.sort().every(function(value, index)
+    { return value === array.sort()[index]}))){
+      background(0);
+      setGradient(0, 0, windowWidth, windowHeight, c1, c2);
+      image(endPic,200,50);
+    }
 }
+
+
+
+
 function setter(x){
   if (active && x ==1){
     console.log("one")
-    window.open('infant.html', width = 1536, height = 754);
+    window.open('infant.html')
+    endNum.push(1)
     active = false
   }
   if (active && x ==2){
     console.log("two")
     window.open('teen.html')
     active = false
+    endNum.push(2)
   }
   if (active && x ==3){
     console.log("three")
     window.open('ending.html')
     active = false
+    endNum.push(3)
   }
 
 }
@@ -128,7 +150,10 @@ function vidDone(){
   intro.hide()
   ins.play()
 }
-
+//get the unique value in the array
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
 
 //class halo
 class Halo{
