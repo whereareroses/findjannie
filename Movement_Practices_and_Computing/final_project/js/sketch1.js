@@ -16,7 +16,10 @@ let model = 1;
 let goin_b = true;
 let remaining = 0;
 let rem = 0;
-let frm = 0; 
+let frm = 0;
+
+//avoid synchronus functions
+let active = true;
 
 function preload(){
   bg = loadImage('pic/bg.jpg');
@@ -46,6 +49,8 @@ function setup() {
     //loading icons disappear
     load = trans;
   });
+
+  print(windowHeight,windowWidth)
 }
 
 function draw() {
@@ -130,164 +135,190 @@ function drawKeypoints() {
 function wrist(){
   //the right hand functions
   if (rwx > 850 && rwx < 870 && rwy > 600 && rwy < 700) {
-    //set a rect as a hint
-    if (goin_b){
-      timer = frameCount;
-    }
-    goin_b = false;
-    noStroke();
-    fill(255, 77);
-    rectMode(CENTER);
-    rect(860, 650, 160, 80);
-    remaining = frameCount - timer;
+    // //set a rect as a hint
+    // if (goin_b){
+    //   timer = frameCount;
+    // }
+    // goin_b = false;
+    // noStroke();
+    // fill(255, 77);
+    // rectMode(CENTER);
+    // rect(860, 650, 160, 80);
+    // remaining = frameCount - timer;
 
-    //set the ellipse timer
-    if (remaining < 160) {
-      // Less than 4 seconds, display progress bar
-      fill(255);
-      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
-    }else {
-      frm = frameCount;
-      goin_b = true;    
-      //only when the point stayed more than 4 seconds, the next video could play
-      print('hi2');
-      src = createVideo('./video/iCatch2.mp4');
-      src.volume(0);
-      src.play();
-    }
+    // //set the ellipse timer
+    // if (remaining < 160) {
+    //   // Less than 4 seconds, display progress bar
+    //   fill(255);
+    //   arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    // }else {
+    //   frm = frameCount;
+    //   goin_b = true;    
+    //   //only when the point stayed more than 4 seconds, the next video could play
+    //   print('hi2');
+    //   src = createVideo('./video/iCatch2.mp4');
+    //   src.volume(0);
+    //   src.play();
+    // }
+    setterRight(1)
   } else if (rwx > 690 && rwx < 710 && rwy > 580 && rwy < 730) {    
-    //set a rect as a hint
-    if (goin_b){
-      timer = frameCount;
-    }
-    goin_b = false;
-    noStroke();
-    fill(255, 77);
-    rectMode(CENTER);
-    rect(700, 655, 160, 80);
-    remaining = frameCount - timer;
+    setterRight(2);
+    // //set a rect as a hint
+    // if (goin_b){
+    //   timer = frameCount;
+    // }
+    // goin_b = false;
+    // noStroke();
+    // fill(255, 77);
+    // rectMode(CENTER);
+    // rect(700, 655, 160, 80);
+    // remaining = frameCount - timer;
 
-    //set the ellipse timer
-    if (remaining < 160) {
-      // Less than 4 seconds, display progress bar
-      fill(255);
-      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
-    }else {
-      frm = frameCount;
-      goin_b = true;    
-      //only when the point stayed more than 4 seconds, the next video could play    
-      print('hi3');
-      src = createVideo('./video/iCatch3.mp4');
-      src.volume(0);
-      src.play();
-    }
+    // //set the ellipse timer
+    // if (remaining < 160) {
+    //   // Less than 4 seconds, display progress bar
+    //   fill(255);
+    //   arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    // }else {
+    //   frm = frameCount;
+    //   goin_b = true;    
+    //   //only when the point stayed more than 4 seconds, the next video could play    
+    //   print('hi3');
+    //   src = createVideo('./video/iCatch3.mp4');
+    //   src.volume(0);
+    //   src.play();
+    // }
   } else if (rwx > 830 && rwx < 840 && rwy > 250 && rwy < 260) {
-    //set a rect as a hint
-    if (goin_b){
-      timer = frameCount;
-    }
-    goin_b = false;
-    noStroke();
-    fill(255, 77);
-    rectMode(CENTER);
-    rect(835, 255, 160, 80);
-    remaining = frameCount - timer;
+    setterRight(3);
+    // //set a rect as a hint
+    // if (goin_b){
+    //   timer = frameCount;
+    // }
+    // goin_b = false;
+    // noStroke();
+    // fill(255, 77);
+    // rectMode(CENTER);
+    // rect(835, 255, 160, 80);
+    // remaining = frameCount - timer;
 
-    //set the ellipse timer
-    if (remaining < 160) {
-      // Less than 4 seconds, display progress bar
-      fill(255);
-      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
-    }else {
-      frm = frameCount;
-      goin_b = true;    
-      //only when the point stayed more than 4 seconds, the next video could play
-      print('hi4');
-      src = createVideo('./video/iCatch4.mp4');
-      src.volume(0);
-      src.play();
-    }
+    // //set the ellipse timer
+    // if (remaining < 160) {
+    //   // Less than 4 seconds, display progress bar
+    //   fill(255);
+    //   arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    // }else {
+    //   frm = frameCount;
+    //   goin_b = true;    
+    //   //only when the point stayed more than 4 seconds, the next video could play
+    //   print('hi4');
+    //   src = createVideo('./video/iCatch4.mp4');
+    //   src.volume(0);
+    //   src.play();
+    // }
   } else if (rwx > 590 && rwx < 600 && rwy > 430 && rwy < 440) {
-    //set a rect as a hint
-    if (goin_b){
-      timer = frameCount;
-    }
-    goin_b = false;
-    noStroke();
-    fill(255, 77);
-    rectMode(CENTER);
-    rect(595, 435, 160, 80);
-    remaining = frameCount - timer;
+    setterRight(4);
+    // //set a rect as a hint
+    // if (goin_b){
+    //   timer = frameCount;
+    // }
+    // goin_b = false;
+    // noStroke();
+    // fill(255, 77);
+    // rectMode(CENTER);
+    // rect(595, 435, 160, 80);
+    // remaining = frameCount - timer;
 
-    //set the ellipse timer
-    if (remaining < 160) {
-      // Less than 4 seconds, display progress bar
-      fill(255);
-      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
-    }else {
-      frm = frameCount;
-      goin_b = true;    
-      //only when the point stayed more than 4 seconds, the next video could play
-      print('hi5');
-      src = createVideo('./video/iCatch5.mp4');
-      src.volume(0);
-      src.play();
-    }
+    // //set the ellipse timer
+    // if (remaining < 160) {
+    //   // Less than 4 seconds, display progress bar
+    //   fill(255);
+    //   arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    // }else {
+    //   frm = frameCount;
+    //   goin_b = true;    
+    //   //only when the point stayed more than 4 seconds, the next video could play
+    //   print('hi5');
+    //   src = createVideo('./video/iCatch5.mp4');
+    //   src.volume(0);
+    //   src.play();
+    // }
   } else if (rwx > 755 && rwx < 765 && rwy > 345 && rwy < 355) {
-    //set a rect as a hint
-    if (goin_b){
-      timer = frameCount;
-    }
-    goin_b = false;
-    noStroke();
-    fill(255, 77);
-    rectMode(CENTER);
-    rect(760, 350, 160, 80);
-    remaining = frameCount - timer;
+    setterRight(5);
+    // //set a rect as a hint
+    // if (goin_b){
+    //   timer = frameCount;
+    // }
+    // goin_b = false;
+    // noStroke();
+    // fill(255, 77);
+    // rectMode(CENTER);
+    // rect(760, 350, 160, 80);
+    // remaining = frameCount - timer;
 
-    //set the ellipse timer
-    if (remaining < 160) {
-      // Less than 4 seconds, display progress bar
-      fill(255);
-      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
-    }else {
-      frm = frameCount;
-      goin_b = true;    
-      //only when the point stayed more than 4 seconds, the next video could play
-      print('hi6');
-      src = createVideo('./video/iCatch6.mp4');
-      src.volume(0);
-      src.play();
-    }
+    // //set the ellipse timer
+    // if (remaining < 160) {
+    //   // Less than 4 seconds, display progress bar
+    //   fill(255);
+    //   arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    // }else {
+    //   frm = frameCount;
+    //   goin_b = true;    
+    //   //only when the point stayed more than 4 seconds, the next video could play
+    //   print('hi6');
+    //   src = createVideo('./video/iCatch6.mp4');
+    //   src.volume(0);
+    //   src.play();
+    // }
   } else if (rwx > 600 && rwx < 610 && rwy > 275 && rwy < 285) {
-    //set a rect as a hint
-    if (goin_b){
-      timer = frameCount;
-    }
-    goin_b = false;
-    noStroke();
-    fill(255, 77);
-    rectMode(CENTER);
-    rect(605, 280, 160, 80);
-    remaining = frameCount - timer;
+    setterRight(6);
+    // //set a rect as a hint
+    // if (goin_b){
+    //   timer = frameCount;
+    // }
+    // goin_b = false;
+    // noStroke();
+    // fill(255, 77);
+    // rectMode(CENTER);
+    // rect(605, 280, 160, 80);
+    // remaining = frameCount - timer;
 
-    //set the ellipse timer
-    if (remaining < 160) {
-      // Less than 4 seconds, display progress bar
-      fill(255);
-      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
-    }else {
-      frm = frameCount;
-      goin_b = true;    
-      //only when the point stayed more than 4 seconds, the next video could play
-      print('bye');
-      window.open('index.html');
-      window.close();
-    }
+    // //set the ellipse timer
+    // if (remaining < 160) {
+    //   // Less than 4 seconds, display progress bar
+    //   fill(255);
+    //   arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    // }else {
+    //   frm = frameCount;
+    //   goin_b = true;    
+    //   //only when the point stayed more than 4 seconds, the next video could play
+    //   print('bye');
+    //   window.open('index.html');
+    //   window.close();
+    // }
+  } else {
+    active = true;
   }
 
   //now the left hand functions
   if (lwx > 850 && lwx < 870 && lwy > 600 && lwy < 700) {
+    setterLeft(1);
+  } else if (lwx > 690 && lwx < 710 && lwy > 580 && lwy < 730) {    
+    setterLeft(2);
+  } else if (lwx > 830 && lwx < 840 && lwy > 250 && lwy < 260) {
+    setterLeft(3);
+  } else if (lwx > 590 && lwx < 600 && lwy > 430 && lwy < 440) {
+    setterLeft(4)
+  } else if (lwx > 755 && lwx < 765 && lwy > 345 && lwy < 355) {
+    setterLeft(5);
+  } else if (lwx > 600 && lwx < 610 && lwy > 275 && lwy < 285) {
+    setterLeft(6);
+  } else {
+    active = true;
+  }
+}
+
+function setterLeft(a) {
+  if (active && a == 1){
     //set a rect as a hint
     if (goin_b){
       timer = frameCount;
@@ -306,14 +337,15 @@ function wrist(){
       arc(lwx, lwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
     }else {
       frm = frameCount;
-      goin_b = true;    
+      goin_b = true; 
+      active = false;   
       //only when the point stayed more than 4 seconds, the next video could play
       print('hi2');
       src = createVideo('./video/iCatch2.mp4');
       src.volume(0);
       src.play();
     }
-  } else if (lwx > 690 && lwx < 710 && lwy > 580 && lwy < 730) {    
+  }else if (active && a == 2) {
     //set a rect as a hint
     if (goin_b){
       timer = frameCount;
@@ -332,14 +364,15 @@ function wrist(){
       arc(lwx, lwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
     }else {
       frm = frameCount;
-      goin_b = true;    
+      goin_b = true; 
+      active = false;   
       //only when the point stayed more than 4 seconds, the next video could play    
       print('hi3');
       src = createVideo('./video/iCatch3.mp4');
       src.volume(0);
       src.play();
     }
-  } else if (lwx > 830 && lwx < 840 && lwy > 250 && lwy < 260) {
+  }else if (active && a == 3) {    
     //set a rect as a hint
     if (goin_b){
       timer = frameCount;
@@ -359,13 +392,14 @@ function wrist(){
     }else {
       frm = frameCount;
       goin_b = true;    
+      active = false;
       //only when the point stayed more than 4 seconds, the next video could play
       print('hi4');
       src = createVideo('./video/iCatch4.mp4');
       src.volume(0);
       src.play();
     }
-  } else if (lwx > 590 && lwx < 600 && lwy > 430 && lwy < 440) {
+  }else if (active && a == 4) {    
     //set a rect as a hint
     if (goin_b){
       timer = frameCount;
@@ -384,14 +418,15 @@ function wrist(){
       arc(lwx, lwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
     }else {
       frm = frameCount;
-      goin_b = true;    
+      goin_b = true;   
+      active = false; 
       //only when the point stayed more than 4 seconds, the next video could play
       print('hi5');
       src = createVideo('./video/iCatch5.mp4');
       src.volume(0);
       src.play();
     }
-  } else if (lwx > 755 && lwx < 765 && lwy > 345 && lwy < 355) {
+  }else if (active && a == 5) {    
     //set a rect as a hint
     if (goin_b){
       timer = frameCount;
@@ -411,13 +446,14 @@ function wrist(){
     }else {
       frm = frameCount;
       goin_b = true;    
+      active == false
       //only when the point stayed more than 4 seconds, the next video could play
       print('hi6');
       src = createVideo('./video/iCatch6.mp4');
       src.volume(0);
       src.play();
     }
-  } else if (lwx > 600 && lwx < 610 && lwy > 275 && lwy < 285) {
+  }else if (active && a == 6) {
     //set a rect as a hint
     if (goin_b){
       timer = frameCount;
@@ -437,9 +473,173 @@ function wrist(){
     }else {
       frm = frameCount;
       goin_b = true;    
+      active == false;
       //only when the point stayed more than 4 seconds, the next video could play
       print('bye');
-      window.open('index.html');
+      window.close();
+    }
+  }
+}
+
+function setterRight(b){
+  if (active && b == 1){
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(860, 650, 160, 80);
+    remaining = frameCount - timer;
+    // active = false;  
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true; 
+      active = false;   
+      //only when the point stayed more than 4 seconds, the next video could play
+      print('hi2');
+      src = createVideo('./video/iCatch2.mp4');
+      src.volume(0);
+      src.play();
+    }
+  }else if (active && b == 2) {
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(700, 655, 160, 80);
+    remaining = frameCount - timer;
+
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true; 
+      active = false;   
+      //only when the point stayed more than 4 seconds, the next video could play    
+      print('hi3');
+      src = createVideo('./video/iCatch3.mp4');
+      src.volume(0);
+      src.play();
+    }
+  }else if (active && b == 3) {    
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(835, 255, 160, 80);
+    remaining = frameCount - timer;
+
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true;    
+      active = false;
+      //only when the point stayed more than 4 seconds, the next video could play
+      print('hi4');
+      src = createVideo('./video/iCatch4.mp4');
+      src.volume(0);
+      src.play();
+    }
+  }else if (active && b == 4) {    
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(595, 435, 160, 80);
+    remaining = frameCount - timer;
+
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true;   
+      active = false; 
+      //only when the point stayed more than 4 seconds, the next video could play
+      print('hi5');
+      src = createVideo('./video/iCatch5.mp4');
+      src.volume(0);
+      src.play();
+    }
+  }else if (active && b == 5) {    
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(760, 350, 160, 80);
+    remaining = frameCount - timer;
+
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true;    
+      active == false
+      //only when the point stayed more than 4 seconds, the next video could play
+      print('hi6');
+      src = createVideo('./video/iCatch6.mp4');
+      src.volume(0);
+      src.play();
+    }
+  }else if (active && b == 6) {
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(605, 280, 160, 80);
+    remaining = frameCount - timer;
+
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true;    
+      active == false;
+      //only when the point stayed more than 4 seconds, the next video could play
+      print('bye');
       window.close();
     }
   }

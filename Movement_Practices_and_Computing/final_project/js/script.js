@@ -39,7 +39,6 @@ function setup() {
   halo = new Halo(550,550,90);
 
   // Define colors
-
   c1 = color(0, 53, 138);
   c2 = color(0);
   c3 = color(255);
@@ -108,7 +107,7 @@ if(done){
 function setter(x){
   if (active && x ==1){
     console.log("one")
-    window.open('infant.html')
+    window.open('infant.html', width = 1536, height = 754);
     active = false
   }
   if (active && x ==2){

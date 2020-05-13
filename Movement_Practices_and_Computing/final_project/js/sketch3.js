@@ -90,15 +90,16 @@ function draw() {
 function keyPressed(){
   // if (key == 's'){
   //   knn.save('endpose.json');
-  // } else if (key == 3) {
-  //   src = createVideo('./video/swim3.mp4');
-  //   src.play();
-  //   src.volume(0);    
+  // } else 
+  if (key == 3) {
+    src = createVideo('./video/swim3.mp4');
+    src.play();
+    src.volume(0);    
   // } else if (key == 4) {
   //   src = createVideo('./video/swim4.mp4');
   //   src.play();
   //   src.volume(0);    
-  // }
+  }
 }
 
 function modelReady() {

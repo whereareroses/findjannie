@@ -99,11 +99,9 @@ function keyPressed(){
 }
 
 function modelReady() {
-  select('#status').html('model Loaded');
   knn = ml5.KNNClassifier()
   knn.load('./json/pose.json', function(){
     console.log('data loaded');
-    classify();
   });
 }
 
@@ -191,27 +189,43 @@ function gotResults(error, result) {
 
   if (result) {  
     if (result.label == 1) {
-      print('hi3');
-      var bgm1 = document.getElementById('bgm1');
-      bgm1.pause();
-      var bgm2 = document.getElementById('bgm2');
-      bgm2.play();
-      src = createVideo('./video/tQuarrel1.mp4');
-      src.play();
-      src.volume(0.3);
+      print('hi111111')
+      setter(1)
     }else if (result.label == 2) {
-      print('hi4');
-      src = createVideo('./video/tQuarrel2.mp4');
-      src.play();
-      src.volume(0.3);
+
+      setter(2)
     }else if (result.label == 3) {
-      print('hi5');
-      src = createVideo('./video/tQuarrel3.mp4');
-      src.play();
-      src.volume(0.3);
+
+      setter(3)
     }
   }
   classify();
+}
+
+function setter(x) {
+  if (active && x == 1){
+    print('hi3');
+    var bgm1 = document.getElementById('bgm1');
+    bgm1.pause();
+    var bgm2 = document.getElementById('bgm2');
+    bgm2.play();
+    src = createVideo('./video/tQuarrel1.mp4');
+    src.play();
+    src.volume(0.3); 
+    active = false;   
+  } else if (active && x == 2) {
+    print('hi4');
+    src = createVideo('./video/tQuarrel2.mp4');
+    src.play();
+    src.volume(0.3);
+    active = false;
+  } else if (active && x == 3){
+    print('hi5');
+    src = createVideo('./video/tQuarrel3.mp4');
+    src.play();
+    src.volume(0.3);    
+    active = false;
+  }
 }
 
 // Update the example count for each label	
