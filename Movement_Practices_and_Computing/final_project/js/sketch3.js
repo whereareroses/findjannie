@@ -193,7 +193,7 @@ function createButtons() {
 
   // // Clear all classes button
   // buttonClearAll = select('#clearAll');
-  // buttonClearAll.mousePressed(clearAllLabels);
+  // buttonClearAll.mousePressed(clearAllLabels)
 }
    
 // Show the results
