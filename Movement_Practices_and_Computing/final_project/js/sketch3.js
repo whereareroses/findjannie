@@ -20,8 +20,7 @@ let y = 0;
 // Create the variables needed for detect the right hand coordination
 let timer;
 let count = 0;
-let rwx = 0;
-let rwy = 0;
+let rwx, rwy, lwx, lwy = 0;
 let time_count = 0;
 let time = 60;
 let model = 1;
@@ -32,6 +31,8 @@ let frm = 0;
 
 function preload(){
   bg = loadImage('pic/bg.jpg');
+  load = loadImage('pic/loading.png');
+  trans = loadImage('pic/trans.png');
 }
 
 function setup() {
@@ -39,10 +40,12 @@ function setup() {
   canvas.parent('videoContainer');
   video = createCapture(VIDEO);
   video.size(width, height);
+  // video.hide();
 
   src = createVideo('video/swim1.mp4');
   src.volume(0);
   src.play();
+  src.hide();
 
   createButtons();
 
@@ -53,11 +56,16 @@ function setup() {
   poseNet.on('pose', function(results) {
     select('#bgm').play();
     poses = results;
+    //loading icons disappear
+    load = trans;
   });
 }
 
 function draw() {
   background(bg);
+
+  image(load, windowWidth/4 - windowHeight/3.1 - 25, windowHeight/2 - 25, 50, 50);
+  image(load, windowWidth*3/4 + windowHeight/3.1 - 25, windowHeight/2 - 25, 50, 50);
 
   image(src, width/2 - width/3.1, height/2 - height/2.6, width/1.55, height/1.3);
   //mirror the video
@@ -80,29 +88,38 @@ function draw() {
 
 // Click 's' to save the examples
 function keyPressed(){
-  if (key == 's'){
-    knn.save('pose.json');
+  // if (key == 's'){
+  //   knn.save('endpose.json');
+  // } else 
+  if (key == 3) {
+    src = createVideo('./video/swim3.mp4');
+    src.play();
+    src.volume(0);    
+  // } else if (key == 4) {
+  //   src = createVideo('./video/swim4.mp4');
+  //   src.play();
+  //   src.volume(0);    
   }
 }
 
 function modelReady() {
   select('#status').html('model Loaded');
   knn = ml5.KNNClassifier()
-  // knn.load('pose.json', function(){
-  //   console.log('data loaded');
-  //   classify();
-  // });
+  knn.load('./json/endpose.json', function(){
+    console.log('data loaded');
+    classify();
+  });
 }
 
 // Add the current frame from the video to the classifier
 function addExample(label) {
-  // Convert poses results to a 2d array [[score0, x0, y0],...,[score16, x16, y16]]
-  const poseArray = poses[0].pose.keypoints.map(p => [p.score, p.position.x, p.position.y]);
-  if (poseArray) {
-  // Add an example with a label to the classifier
-    knn.addExample(poseArray, label);
-    updateCounts();
-  }
+  // // Convert poses results to a 2d array [[score0, x0, y0],...,[score16, x16, y16]]
+  // const poseArray = poses[0].pose.keypoints.map(p => [p.score, p.position.x, p.position.y]);
+  // if (poseArray) {
+  // // Add an example with a label to the classifier
+  //   knn.addExample(poseArray, label);
+  //   updateCounts();
+  // }
 }
 
 // Predict the current frame.
@@ -129,64 +146,54 @@ function classify() {
 
 // A util function to create UI buttons
 function createButtons() {
-  // When the button is pressed, add the current frame
-  // from the video with a label of "1" to the classifier
-  button1 = select('#addClass1');
-  button1.mousePressed(function() {
-    addExample('1');
-    print('added')
-  });
-  button2 = select('#addClass2');
-  button2.mousePressed(function() {
-    addExample('2');
-  });
-  button3 = select('#addClass3');
-  button3.mousePressed(function() {
-    addExample('3');
-  });
-  button4 = select('#addClass4');
-  button4.mousePressed(function() {
-    addExample('4');
-  });
-  button5 = select('#addClass5');
-  button5.mousePressed(function() {
-    addExample('5');
-  });
+  // // When the button is pressed, add the current frame
+  // // from the video with a label of "1" to the classifier
+  // button1 = select('#addClass1');
+  // button1.mousePressed(function() {
+  //   addExample('1');
+  //   print('added')
+  // });
+  // button2 = select('#addClass2');
+  // button2.mousePressed(function() {
+  //   addExample('2');
+  // });
+  // button3 = select('#addClass3');
+  // button3.mousePressed(function() {
+  //   addExample('3');
+  // });
+  // button4 = select('#addClass4');
+  // button4.mousePressed(function() {
+  //   addExample('4');
+  // });
 
+  // // Reset buttons
+  // resetBtn1 = select('#reset1');
+  // resetBtn1.mousePressed(function() {
+  //   clearLabel('1');
+  // });
 
-  // Reset buttons
-  resetBtn1 = select('#reset1');
-  resetBtn1.mousePressed(function() {
-    clearLabel('1');
-  });
-
-  resetBtn2 = select('#reset2');
-  resetBtn2.mousePressed(function() {
-    clearLabel('2');
-  });
+  // resetBtn2 = select('#reset2');
+  // resetBtn2.mousePressed(function() {
+  //   clearLabel('2');
+  // });
   
-  resetBtn3 = select('#reset3');
-  resetBtn3.mousePressed(function() {
-    clearLabel('3');
-  });
+  // resetBtn3 = select('#reset3');
+  // resetBtn3.mousePressed(function() {
+  //   clearLabel('3');
+  // });
 
-  resetBtn4 = select('#reset4');
-  resetBtn4.mousePressed(function() {
-    clearLabel('4');
-  });
+  // resetBtn4 = select('#reset4');
+  // resetBtn4.mousePressed(function() {
+  //   clearLabel('4');
+  // });
 
-  resetBtn5 = select('#reset5');
-  resetBtn5.mousePressed(function() {
-    clearLabel('5');
-  });
+  // // Predict button
+  // start = select('#start');
+  // start.mousePressed(classify);
 
-  // Predict button
-  start = select('#start');
-  start.mousePressed(classify);
-
-  // Clear all classes button
-  buttonClearAll = select('#clearAll');
-  buttonClearAll.mousePressed(clearAllLabels);
+  // // Clear all classes button
+  // buttonClearAll = select('#clearAll');
+  // buttonClearAll.mousePressed(clearAllLabels)
 }
    
 // Show the results
@@ -203,43 +210,34 @@ function gotResults(error, result) {
       src = createVideo('./video/swim3.mp4');
       src.play();
       src.volume(0);
-    }else if (result.label == 2 || result.label == 3) {
-      print('hi4');
-      src = createVideo('./video/swim4.mp4');
-      src.play();
-      src.volume(0);
-    }else if (result.label == 4) {
-      print('bye');
+    }else if (result.label == 2) {
       window.open('index.html');
       window.close();
-    }  
-
+    }
   }
-
   classify();
 }
 
 // Update the example count for each label	
 function updateCounts() {
-  const counts = knn.getCountByLabel();
+  // const counts = knn.getCountByLabel();
 
-  select('#example1').html(counts['1'] || 0);
-  select('#example2').html(counts['2'] || 0);
-  select('#example3').html(counts['3'] || 0);
-  select('#example4').html(counts['4'] || 0);
-  select('#example5').html(counts['5'] || 0);
+  // select('#example1').html(counts['1'] || 0);
+  // select('#example2').html(counts['2'] || 0);
+  // select('#example3').html(counts['3'] || 0);
+  // select('#example4').html(counts['4'] || 0);
 }
 
 // // Clear the examples in one label
 function clearLabel(classLabel) {
-  knn.clearLabel(classLabel);
-  updateCounts();
+  // knn.clearLabel(classLabel);
+  // updateCounts();
 }
 
 // Clear all the examples in all labels
 function clearAllLabels() {
-  knn.clearAllLabels();
-  updateCounts();
+  // knn.clearAllLabels();
+  // updateCounts();
 }
 
 // Draw an ellipse on the wrist
@@ -270,7 +268,7 @@ function drawKeypoints() {
     }
   }
 
-  // When the confidence score is larger than 0.5, use right hand as the parameter
+  // When the confidence score is larger than 0.5, use hand as the parameter
   if (poses.length > 0){
     if (poses[0].pose.rightWrist.confidence > 0.5){
       rwy = poses[0].pose.rightWrist.y;
@@ -280,21 +278,80 @@ function drawKeypoints() {
       rwy = mouseY;
     }
   }
+  if (poses.length > 0){
+    if (poses[0].pose.leftWrist.confidence > 0.5){
+      lwy = poses[0].pose.leftWrist.y;
+      lwx = width - poses[0].pose.leftWrist.x;
+    }
+  }
 
   push();
   translate(width, 0)
   scale(-1.0, 1.0);
   // Draw the ellipse
+  wristEllipse(lwx, lwy, 50);
   wristEllipse(rwx, rwy, 50);
   // print(rwx, rwy)
-  
-  if (rwx > 440 && rwx < 510 && rwy > 470 && rwy < 530) {
-    print('hi2');
-    src = createVideo('./video/swim2.mp4');
-    src.volume(0);
-    src.play();
-  }
+  wrist();
+
   pop();
+}
+
+function wrist() {
+  if (rwx > 550 && rwx < 620 && rwy > 480 && rwy < 530) {
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(585, 505, 160, 80);
+    remaining = frameCount - timer;
+
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true;    
+      //only when the point stayed more than 4 seconds, the next video could play
+      print('hi2');
+      src = createVideo('./video/swim2.mp4');
+      src.volume(0);
+      src.play();
+    }
+  }
+  if (lwx > 550 && lwx < 620 && lwy > 480 && lwy < 530) {
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(585, 505, 160, 80);
+    remaining = frameCount - timer;
+
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(lwx, lwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true;    
+      //only when the point stayed more than 4 seconds, the next video could play
+      print('hi2');
+      src = createVideo('./video/swim2.mp4');
+      src.volume(0);
+      src.play();
+    }
+  }
 }
 
 // A function to draw the skeletons

@@ -20,8 +20,7 @@ let y = 0;
 // Create the variables needed for detect the right hand coordination
 let timer;
 let count = 0;
-let rwx = 0;
-let rwy = 0;
+let rwx, rwy, lwx, lwy, rax, ray = 0;
 let time_count = 0;
 let time = 60;
 let model = 1;
@@ -30,8 +29,12 @@ let remaining = 0;
 let rem = 0;
 let frm = 0; 
 
+let active = true;
+
 function preload(){
   bg = loadImage('pic/bg.jpg');
+  load = loadImage('pic/loading.png');
+  trans = loadImage('pic/trans.png');
 }
 
 function setup() {
@@ -39,12 +42,14 @@ function setup() {
   canvas.parent('videoContainer');
   video = createCapture(VIDEO);
   video.size(width, height);
+  // video.hide();
 
   // Create the UI buttons
   createButtons();
 
   src = createVideo('video/tLaugh1.mp4');
   src.volume(0);
+  src.hide();
   src.play();
 
   // Create a new poseNet method with a single detection
@@ -54,12 +59,17 @@ function setup() {
   poseNet.on('pose', function(results) {
     select('#bgm1').play();
     poses = results;
+    //loading icons disappear
+    load = trans;
   });
 }
 
 function draw() {
   background(bg);
 
+  image(load, windowWidth/4 - windowHeight/3.1 - 25, windowHeight/2 - 25, 50, 50);
+  image(load, windowWidth*3/4 + windowHeight/3.1 - 25, windowHeight/2 - 25, 50, 50);
+  
   image(src, width/2 - width/3.1, height/2 - height/2.6, width/1.55, height/1.3);
   //mirror the video
   translate(video.width, 0)
@@ -80,20 +90,24 @@ function draw() {
 }
 
 
-// Click 's' to save the examples
+// Bonus
 function keyPressed(){
-  if (key == 's'){
-    knn.save('pose.json');
+  if (key == 'h'){
+    src.pause();
+    src = createVideo('./video/tLaugh3.mp4');
+    src.play();
+    src.volume(0);
+  }else if (key == 's'){
+    knn.save('teenpose.json')
   }
 }
 
 function modelReady() {
-  select('#status').html('model Loaded');
   knn = ml5.KNNClassifier()
-  knn.load('./json/pose.json', function(){
-    console.log('data loaded');
-    classify();
-  });
+  // knn.load('./json/pose.json', function(){
+  //   console.log('data loaded');
+  //   classify();
+  // });
 }
 
 // Add the current frame from the video to the classifier
@@ -116,7 +130,6 @@ function classify() {
     console.error('There is no examples in any label');
     return;
   }
-
   const firstPose = poses[0];
   if (firstPose) {
     console.log('now is classifying');
@@ -149,64 +162,29 @@ function createButtons() {
   button4.mousePressed(function() {
     addExample('4');
   });
-  button5 = select('#addClass5');
-  button5.mousePressed(function() {
-    addExample('5');
-  });
-  button6 = select('#addClass6');
-  button6.mousePressed(function() {
-    addExample('6');
-  });
-  button7 = select('#addClass7');
-  button7.mousePressed(function() {
-    addExample('7');
-  });
+    // // Reset buttons
+    // resetBtn1 = select('#reset1');
+    // resetBtn1.mousePressed(function() {
+    //   clearLabel('1');
+    // });
 
-    // Reset buttons
-    resetBtn1 = select('#reset1');
-    resetBtn1.mousePressed(function() {
-      clearLabel('1');
-    });
+    // resetBtn2 = select('#reset2');
+    // resetBtn2.mousePressed(function() {
+    //   clearLabel('2');
+    // });
 
-    resetBtn2 = select('#reset2');
-    resetBtn2.mousePressed(function() {
-      clearLabel('2');
-    });
-
-    resetBtn3 = select('#reset3');
-    resetBtn3.mousePressed(function() {
-      clearLabel('3');
-    });
-   resetBtn4 = select('#reset4');
-    resetBtn4.mousePressed(function() {
-      clearLabel('4');
-    });
-
-
-    resetBtn5 = select('#reset5');
-    resetBtn5.mousePressed(function() {
-      clearLabel('5');
-    });
-
-
-    resetBtn6 = select('#reset6');
-    resetBtn6.mousePressed(function() {
-      clearLabel('6');
-    });
-
-
-    resetBtn7 = select('#reset7');
-    resetBtn7.mousePressed(function() {
-      clearLabel('7');
-    });
+    // resetBtn3 = select('#reset3');
+    // resetBtn3.mousePressed(function() {
+    //   clearLabel('3');
+    // });
 
   // Predict button
   start = select('#start');
   start.mousePressed(classify);
 
-  // Clear all classes button
-  buttonClearAll = select('#clearAll');
-  buttonClearAll.mousePressed(clearAllLabels);
+  // // Clear all classes button
+  // buttonClearAll = select('#clearAll');
+  // buttonClearAll.mousePressed(clearAllLabels);
 }
    
 // Show the results
@@ -216,76 +194,68 @@ function gotResults(error, result) {
     console.error(error);
   }
 
-  if (result) {  
+  if (result) {
+    print('hi111111')  
     if (result.label == 1) {
-      print('hi3');
-      src = createVideo('./video/tLaugh3.mp4');
-      src.play();
-      src.volume(0.3);
-    }else if (result.label == 2 || result.label == 3) {
-      print('hi4');
-      var bgm1 = document.getElementById('bgm1');
-      bgm1.pause();
-      var bgm2 = document.getElementById('bgm2');
-      bgm2.play();
-      src = createVideo('./video/tQuarrel1.mp4');
-      src.play();
-      src.volume(0.3);
-    }else if (result.label == 4) {
-      print('hi5');
-      src = createVideo('./video/tQuarrel2.mp4');
-      src.play();
-      src.volume(0.3);
-    }else if (result.label == 5) {
-      print('hi6');
-      src = createVideo('./video/tQuarrel3.mp4');
-      src.play();
-      src.volume(0.3);
-    }else if (result.label == 6) {
-      print('hi7');
-      src = createVideo('./video/tQuarrel4.mp4');
-      src.play();
-      src.volume(0.3);
-    }else if (result.label == 7){
-      src = createVideo('./video/tQuarrel5.mp4');
-      src.play();
-      src.volume(0.3);
-      setInterval(function(){
-        print('bye');
-        window.open('index.html');
-        window.close();
-      },9000)
-    }
-  }
+      setter(1)
+    }else if (result.label == 2) {
+      setter(2)
+    }else if (result.label == 3) {
+      setter(3)
+    }else{
+    active = true;
+  } 
+    setInterval(classify(), 3000);
+  } 
+}
 
-  classify();
+function setter(x) {
+  if (active && x == 1){
+    print('hi3');
+    var bgm1 = document.getElementById('bgm1');
+    bgm1.pause();
+    var bgm2 = document.getElementById('bgm2');
+    bgm2.play();
+    src = createVideo('./video/tQuarrel1.mp4');
+    src.play();
+    src.volume(0.3); 
+    active = false;   
+  } else if (active && x == 2) {
+    print('hi4');
+    src = createVideo('./video/tQuarrel2.mp4');
+    src.play();
+    src.volume(0.3);
+    active = false;
+  } else if (active && x == 3){
+    print('hi5');
+    src = createVideo('./video/tQuarrel3.mp4');
+    src.play();
+    src.volume(0.3);    
+    active = false;
+  }
 }
 
 // Update the example count for each label	
 function updateCounts() {
-  
   const counts = knn.getCountByLabel();
 
   select('#example1').html(counts['1'] || 0);
   select('#example2').html(counts['2'] || 0);
   select('#example3').html(counts['3'] || 0);
   select('#example4').html(counts['4'] || 0);
-  select('#example5').html(counts['5'] || 0);
-  select('#example6').html(counts['6'] || 0);
-  select('#example7').html(counts['7'] || 0);
-  select('#example8').html(counts['8'] || 0);
+
 }
 
 // // Clear the examples in one label
 function clearLabel(classLabel) {
-  knn.clearLabel(classLabel);
-  updateCounts();
+  // knn.clearLabel(classLabel);
+  // updateCounts();
 }
 
 // Clear all the examples in all labels
 function clearAllLabels() {
-  knn.clearAllLabels();
-  updateCounts();
+  // knn.clearAllLabels();
+  // updateCounts();
 }
 
 // Draw an ellipse on the wrist
@@ -326,21 +296,113 @@ function drawKeypoints() {
       rwy = mouseY;
     }
   }
+  if (poses.length > 0){
+    if (poses[0].pose.leftWrist.confidence > 0.5){
+      lwy = poses[0].pose.leftWrist.y;
+      lwx = width - poses[0].pose.leftWrist.x;
+    }
+  }
+  if (poses.length > 0){
+    if (poses[0].pose.rightKnee.confidence > 0.5){
+      ray = poses[0].pose.rightKnee.y;
+      rax = width - poses[0].pose.rightKnee.x;
+    }else{
+      rax = mouseX;
+      ray = mouseY;
+    }
+  }
 
   push();
   translate(width, 0)
   scale(-1.0, 1.0);
   // Draw the ellipse
   wristEllipse(rwx, rwy, 50);
-  // print(rwx, rwy)
-  
-  if (rwx > 720 && rwx < 730 && rwy > 530 && rwy < 540) {
-    print('hi2');
-    src = createVideo('./video/tLaugh2.mp4');
-    src.play();
-    src.volume(0.3)
-  }
+  wristEllipse(lwx, lwy, 50);
+  wristEllipse(rax, ray, 75);
+  print(rwx, rwy)
+  wrist();
   pop();
+}
+
+function wrist(){
+  if (rwx > 720 && rwx < 740 && rwy > 530 && rwy < 540) {
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(730, 535, 160, 80);
+    remaining = frameCount - timer;
+
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true;    
+      //only when the point stayed more than 4 seconds, the next video could play
+      print('hi2');
+      src = createVideo('./video/tLaugh2.mp4');
+      src.play();
+      src.volume(0.3)
+    }
+  }
+  if (lwx > 720 && lwx < 740 && lwy > 530 && lwy < 540) {
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(730, 535, 160, 80);
+    remaining = frameCount - timer;
+
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(lwx, lwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true;    
+      //only when the point stayed more than 4 seconds, the next video could play
+      print('hi2');
+      src = createVideo('./video/tLaugh2.mp4');
+      src.play();
+      src.volume(0.3)
+    }
+  }
+  if (rax > 600 && rax < 640 && ray > 510 && ray < 560) {    
+    //set a rect as a hint
+    if (goin_b){
+      timer = frameCount;
+    }
+    goin_b = false;
+    noStroke();
+    fill(255, 77);
+    rectMode(CENTER);
+    rect(620, 535, 200, 100);
+    remaining = frameCount - timer;
+
+    //set the ellipse timer
+    if (remaining < 160) {
+      // Less than 4 seconds, display progress bar
+      fill(255);
+      arc(lwx, lwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
+    }else {
+      frm = frameCount;
+      goin_b = true;    
+      print('bye');
+      window.close();
+    }
+  }
 }
 
 // A function to draw the skeletons

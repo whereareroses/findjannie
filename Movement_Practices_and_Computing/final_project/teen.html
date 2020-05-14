@@ -22,16 +22,15 @@
 <body>
     <div id="videoContainer"></div>
     <div id='UI'>
-      <audio controls loop src="sound/teen_laugh.mp3" id = "bgm1"></audio>
-      <audio controls loop src="sound/teen_quarrel.mp3" id = "bgm2"></audio>
+      <audio loop src="sound/teen_laugh.mp3" id = "bgm1"></audio>
+      <audio loop src="sound/teen_quarrel.mp3" id = "bgm2"></audio>
 
-    <div style = "display:inline;" id='instruction'>
+    <!-- <div style = "display:inline;" id='instruction'>
         <p>=>Pose <span id="result">...</span> Confidence<span id="confidence">...</span></p>
       </div>  
     </div>
 
-    <p id="status">Loading Model...</p>
-    
+    <p id="status">Loading Model...</p> -->
 
     <br /><p><button id="addClass1">Add an Example to Class 1</button>
         <button id="reset1">Reset Class 1</button>
@@ -48,39 +47,14 @@
       </p><p><span id="example3">0</span> in 3</p>
       <p>Confidence 3 is: <span id="confidence3">0</span></p>
 
-      <br /><p><button id="addClass4">Add an Example to Class 4</button>
+      <br /><p><button id="addClass4">Add an Example to Class 3</button>
         <button id="reset4">Reset Class 4</button>
         </p><p><span id="example4">0</span> in 4</p>
-        <p>Confidence 4 is: <span id="confidence4">0</span></p>
-    
-      <br /><p><button id="addClass5">Add an Example to Class 5</button>
-        <button id="reset5">Reset Class 5</button>
-        </p><p><span id="example5">0</span> in 5</p>
-        <p>Confidence 5 is: <span id="confidence5">0</span></p>
-    
-        <br /><p><button id="addClass6">Add an Example to Class 6</button>
-        <button id="reset6">Reset Class 6</button>
-        </p><p><span id="example6">0</span> in 6</p>
-        <p>Confidence 6 is: <span id="confidence6">0</span></p>
-    
-        <br /><p><button id="addClass7">Add an Example to Class 7</button>
-        <button id="reset7">Reset Class 7</button>
-        </p><p><span id="example7">0</span> in 7</p>
-        <p>Confidence 7 is: <span id="confidence7">0</span></p>
-    
-      
-      <br /><p><button id="addClass8">Add an Example to Class 8</button>
-        <button id="reset8">Reset Class 8</button>
-        </p><p><span id="example8">0</span> in 8</p>
-        <p>Confidence 8 is: <span id="confidence8">0</span></p>
     
     <button id="start">Classify</button>
     <button id="clearAll">Clear all classes</button>
 </body>
 
-
-
-<script src="./js/script.js"></script>
 <script src="./js/sketch2.js"></script>
 
 </html>
