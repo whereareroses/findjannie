@@ -38,16 +38,17 @@ function preload(){
 }
 
 function setup() {
+  print('this is width'+windowWidth, 'this is height'+windowHeight)
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('videoContainer');
   video = createCapture(VIDEO);
   video.size(width, height);
-  // video.hide();
+  video.hide();
 
   // Create the UI buttons
   createButtons();
 
-  src = createVideo('video/tLaugh1.mp4');
+  src = createVideo('./video/tLaugh1.mp4');
   src.volume(0);
   src.hide();
   src.play();
@@ -99,15 +100,24 @@ function keyPressed(){
     src.volume(0);
   }else if (key == 's'){
     knn.save('teenpose.json')
+  } else if (key == 'c'){
+    classify();
+  } else if (key == 4){
+    print('hi4');
+    src = createVideo('./video/tQuarrel2.mp4');
+    src.play();
+    src.volume(0.3);
+    active = false;    
   }
 }
 
 function modelReady() {
   knn = ml5.KNNClassifier()
-  // knn.load('./json/pose.json', function(){
-  //   console.log('data loaded');
-  //   classify();
-  // });
+  keyPressed();
+  knn.load('./json/teenpose.json', function(){
+    console.log('data loaded');
+    classify();
+  });
 }
 
 // Add the current frame from the video to the classifier
@@ -123,7 +133,8 @@ function addExample(label) {
 
 // Predict the current frame.
 function classify() {
-  setInterval(function(){
+  print('hii, classifying')
+  if (active = false) {
   // Get the total number of labels from knnClassifier
   const numLabels = knn.getNumLabels();
   if (numLabels <= 0) {
@@ -139,48 +150,42 @@ function classify() {
   // You can pass in a callback function `gotResults` to knnClassifier.classify function
     knn.classify(poseArray, gotResults);
   }
-},5000)
+  }
 }
 
 // A util function to create UI buttons
 function createButtons() {
-  // When the button is pressed, add the current frame
-  // from the video with a label of "1" to the classifier
-  button1 = select('#addClass1');
-  button1.mousePressed(function() {
-    addExample('1');
-  });
-  button2 = select('#addClass2');
-  button2.mousePressed(function() {
-    addExample('2');
-  });
-  button3 = select('#addClass3');
-  button3.mousePressed(function() {
-    addExample('3');
-  });
-  button4 = select('#addClass4');
-  button4.mousePressed(function() {
-    addExample('4');
-  });
-    // // Reset buttons
-    // resetBtn1 = select('#reset1');
-    // resetBtn1.mousePressed(function() {
-    //   clearLabel('1');
-    // });
+  // // When the button is pressed, add the current frame
+  // // from the video with a label of "1" to the classifier
+  // button1 = select('#addClass1');
+  // button1.mousePressed(function() {
+  //   addExample('1');
+  // });
+  // button2 = select('#addClass2');
+  // button2.mousePressed(function() {
+  //   addExample('2');
+  // });
+  // button3 = select('#addClass3');
+  // button3.mousePressed(function() {
+  //   addExample('3');
+  // });
+  //   // Reset buttons
+  //   resetBtn1 = select('#reset1');
+  //   resetBtn1.mousePressed(function() {
+  //     clearLabel('1');
+  //   });
 
-    // resetBtn2 = select('#reset2');
-    // resetBtn2.mousePressed(function() {
-    //   clearLabel('2');
-    // });
-
-    // resetBtn3 = select('#reset3');
-    // resetBtn3.mousePressed(function() {
-    //   clearLabel('3');
-    // });
-
-  // Predict button
-  start = select('#start');
-  start.mousePressed(classify);
+  //   resetBtn2 = select('#reset2');
+  //   resetBtn2.mousePressed(function() {
+  //     clearLabel('2');
+  //   });
+  //   resetBtn3 = select('#reset3');
+  //   resetBtn3.mousePressed(function() {
+  //     clearLabel('3');
+  //   });
+  // // Predict button
+  // start = select('#start');
+  // start.mousePressed(classify);
 
   // // Clear all classes button
   // buttonClearAll = select('#clearAll');
@@ -190,7 +195,7 @@ function createButtons() {
 // Show the results
 function gotResults(error, result) {
   // Display any error
-  if (error) {
+    classify();  if (error) {
     console.error(error);
   }
 
@@ -200,12 +205,10 @@ function gotResults(error, result) {
       setter(1)
     }else if (result.label == 2) {
       setter(2)
-    }else if (result.label == 3) {
-      setter(3)
     }else{
     active = true;
-  } 
-    setInterval(classify(), 3000);
+    } 
+
   } 
 }
 
@@ -219,18 +222,17 @@ function setter(x) {
     src = createVideo('./video/tQuarrel1.mp4');
     src.play();
     src.volume(0.3); 
+        // knn.load('./json/pose.json', function(){
+    //   console.log('data loaded');
+    classify();
+    // });
     active = false;   
   } else if (active && x == 2) {
     print('hi4');
     src = createVideo('./video/tQuarrel2.mp4');
     src.play();
     src.volume(0.3);
-    active = false;
-  } else if (active && x == 3){
-    print('hi5');
-    src = createVideo('./video/tQuarrel3.mp4');
-    src.play();
-    src.volume(0.3);    
+    classify();
     active = false;
   }
 }
@@ -242,20 +244,18 @@ function updateCounts() {
   select('#example1').html(counts['1'] || 0);
   select('#example2').html(counts['2'] || 0);
   select('#example3').html(counts['3'] || 0);
-  select('#example4').html(counts['4'] || 0);
-
 }
 
 // // Clear the examples in one label
 function clearLabel(classLabel) {
-  // knn.clearLabel(classLabel);
-  // updateCounts();
+  knn.clearLabel(classLabel);
+  updateCounts();
 }
 
 // Clear all the examples in all labels
 function clearAllLabels() {
-  // knn.clearAllLabels();
-  // updateCounts();
+  knn.clearAllLabels();
+  updateCounts();
 }
 
 // Draw an ellipse on the wrist
@@ -351,6 +351,10 @@ function wrist(){
       src.play();
       src.volume(0.3)
     }
+    // knn.load('./json/pose.json', function(){
+    //   console.log('data loaded');
+    //   classify();
+    // });
   }
   if (lwx > 720 && lwx < 740 && lwy > 530 && lwy < 540) {
     //set a rect as a hint

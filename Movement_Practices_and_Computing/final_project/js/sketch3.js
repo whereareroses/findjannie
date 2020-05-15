@@ -36,6 +36,7 @@ function preload(){
 }
 
 function setup() {
+  print('this is width'+windowWidth, 'this is height'+windowHeight)
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent('videoContainer');
   video = createCapture(VIDEO);

@@ -26,6 +26,7 @@ function preload() {
 }
 
 function setup() {
+  print('this is width'+windowWidth, 'this is height'+windowHeight)
   createCanvas(windowWidth, windowHeight);
   //load and play the video
   background(0)
@@ -126,19 +127,19 @@ if(done){
 function setter(x){
   if (active && x ==1){
     console.log("one")
-    window.open('infant.html', width = 1536, height = 754)
+    window.open('infant.html','', 'width = 1536, height = 754')
     endNum.push(1)
     active = false
   }
   if (active && x ==2){
     console.log("two")
-    window.open('teen.html', width = 1536, height = 754)
+    window.open('teen.html','', 'width = 1536, height = 754')
     active = false
     endNum.push(2)
   }
   if (active && x ==3){
     console.log("three")
-    window.open('ending.html', width = 1536, height = 754)
+    window.open('ending.html', '','width = 1536, height = 754')
     active = false
     endNum.push(3)
   }
