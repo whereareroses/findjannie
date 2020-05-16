@@ -48,7 +48,7 @@ function setup() {
 
   src = createVideo('video/swim1.mp4', vidLoaded);
 
-  createButtons();
+  // createButtons();
 
   // Create a new poseNet method with a single detection
   poseNet = ml5.poseNet(video, modelReady);
