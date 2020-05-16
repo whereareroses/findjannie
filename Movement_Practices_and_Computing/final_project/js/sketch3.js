@@ -29,6 +29,10 @@ let remaining = 0;
 let rem = 0;
 let frm = 0; 
 
+//avoid synchronus functions
+let cActive = false; 
+let pActive = false;
+
 function preload(){
   bg = loadImage('pic/bg.jpg');
   load = loadImage('pic/loading.png');
@@ -40,14 +44,11 @@ function setup() {
   canvas.parent('videoContainer');
   video = createCapture(VIDEO);
   video.size(width, height);
-  // video.hide();
+  video.hide();
 
-  src = createVideo('video/swim1.mp4');
-  src.volume(0);
-  src.play();
-  src.hide();
+  src = createVideo('video/swim1.mp4', vidLoaded);
 
-  createButtons();
+  // createButtons();
 
   // Create a new poseNet method with a single detection
   poseNet = ml5.poseNet(video, modelReady);
@@ -61,6 +62,12 @@ function setup() {
   });
 }
 
+function vidLoaded(){
+  src.volume(0);
+  src.play();
+  src.hide();
+}
+
 function draw() {
   background(bg);
 
@@ -68,10 +75,12 @@ function draw() {
   image(load, windowWidth*3/4 + windowHeight/3.1 - 25, windowHeight/2 - 25, 50, 50);
 
   image(src, width/2 - width/3.1, height/2 - height/2.6, width/1.55, height/1.3);
+  
   //mirror the video
   translate(video.width, 0)
   scale(-1.0, 1.0);
-  
+
+  //print the moving yellow line as the effect of an old camera
   stroke(226, 204, 0);
   strokeWeight(1);
   line(0, y, width, y);
@@ -83,15 +92,35 @@ function draw() {
   // We can call both functions to draw all keypoints and the skeletons
   drawKeypoints();
   drawSkeleton();
+
+  if(cActive){
+    //mirror the video
+    translate(video.width, 0)
+    scale(-1.0, 1.0);    
+    console.log('wrist is going to work')
+    wrist();
+  }
+  if(pActive){
+    //mirror the video
+    translate(video.width, 0)
+    scale(-1.0, 1.0);    
+    console.log('classify is going to work')
+    classify();
+  }
+  src.onended(vidEnded);
 }
 
+function vidEnded(){
+  cActive = true;
+  pActive = true;
+  console.log(cActive == true, pActive == true);
+}
 
 // Click 's' to save the examples
 function keyPressed(){
-  // if (key == 's'){
-  //   knn.save('endpose.json');
-  // } else 
-  if (key == 3) {
+  if (key == 's'){
+    knn.save('endpose.json');
+  } else if (key == 3) {
     src = createVideo('./video/swim3.mp4');
     src.play();
     src.volume(0);    
@@ -103,11 +132,10 @@ function keyPressed(){
 }
 
 function modelReady() {
-  select('#status').html('model Loaded');
   knn = ml5.KNNClassifier()
   knn.load('./json/endpose.json', function(){
     console.log('data loaded');
-    classify();
+    // classify();
   });
 }
 
@@ -124,7 +152,6 @@ function addExample(label) {
 
 // Predict the current frame.
 function classify() {
-  setInterval(function(){
   // Get the total number of labels from knnClassifier
   const numLabels = knn.getNumLabels();
   if (numLabels <= 0) {
@@ -134,14 +161,13 @@ function classify() {
 
   const firstPose = poses[0];
   if (firstPose) {
-    console.log('now is classifying');
+    console.log('pose detected, now is classifying');
   // Convert poses results to a 2d array [[score0, x0, y0],...,[score16, x16, y16]]
     const poseArray = poses[0].pose.keypoints.map(p => [p.score, p.position.x, p.position.y]);
   // Use knnClassifier to classify which label do these features belong to
   // You can pass in a callback function `gotResults` to knnClassifier.classify function
     knn.classify(poseArray, gotResults);
   }
-},5000)
 }
 
 // A util function to create UI buttons
@@ -198,24 +224,28 @@ function createButtons() {
    
 // Show the results
 function gotResults(error, result) {
+  console.log('hi, got Results')
   // Display any error
   if (error) {
     console.error(error);
   }
 
   if (result) {
-    print(result.label);
-    if (result.label == 1) {
+    print('recognized results, result label =', result.label);
+    if (result.label == 1 && pActive == true) {
       print('hi3');
       src = createVideo('./video/swim3.mp4');
       src.play();
       src.volume(0);
-    }else if (result.label == 2) {
+      classify();
+      pActive = false;    
+    }else if (result.label == 2 && pActive == true) {
+      classify();
+      pActive = false;    
       window.open('index.html');
       window.close();
     }
   }
-  classify();
 }
 
 // Update the example count for each label	
@@ -228,7 +258,7 @@ function updateCounts() {
   // select('#example4').html(counts['4'] || 0);
 }
 
-// // Clear the examples in one label
+// Clear the examples in one label
 function clearLabel(classLabel) {
   // knn.clearLabel(classLabel);
   // updateCounts();
@@ -292,13 +322,14 @@ function drawKeypoints() {
   wristEllipse(lwx, lwy, 50);
   wristEllipse(rwx, rwy, 50);
   // print(rwx, rwy)
-  wrist();
-
+  // wrist();
   pop();
 }
 
 function wrist() {
-  if (rwx > 550 && rwx < 620 && rwy > 480 && rwy < 530) {
+  if (rwx > 550 && rwx < 620 && rwy > 480 && rwy < 530 && cActive == true) {
+    pActive = false;
+    console.log('swim 2 runs')
     //set a rect as a hint
     if (goin_b){
       timer = frameCount;
@@ -323,9 +354,12 @@ function wrist() {
       src = createVideo('./video/swim2.mp4');
       src.volume(0);
       src.play();
+      cActive = false;
     }
   }
-  if (lwx > 550 && lwx < 620 && lwy > 480 && lwy < 530) {
+  if (lwx > 550 && lwx < 620 && lwy > 480 && lwy < 530 && cActive == true) {
+    pActive = false;
+    console.log('swim 2 runs')
     //set a rect as a hint
     if (goin_b){
       timer = frameCount;
@@ -350,6 +384,7 @@ function wrist() {
       src = createVideo('./video/swim2.mp4');
       src.volume(0);
       src.play();
+      cActive = false;
     }
   }
 }
