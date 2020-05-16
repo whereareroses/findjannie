@@ -47,8 +47,8 @@ function setup() {
   video.size(width, height);
   video.hide();
 
-  // Create the UI buttons
-  createButtons();
+  // // Create the UI buttons
+  // createButtons();
 
   src = createVideo('./video/tLaugh1.mp4',vidLoaded);    
 
@@ -65,7 +65,6 @@ function setup() {
 }
 
 function vidLoaded(){
-  console.log('video loaded')
   src.volume(0.2);
   src.hide();
   src.play(); 
@@ -117,7 +116,7 @@ function draw() {
 function vidEnded(){
   cActive = true;
   pActive = true;
-  console.log(cActive == true, pActive == true);
+  // console.log(cActive == true, pActive == true);
 }
 
 // Bonus
@@ -130,18 +129,18 @@ function keyPressed(){
     src.volume(0);
   }else if (key == 's'){
     knn.save('teenpose.json')
-  } else if (key == 'c'){
-    console.log('classify runs when key pressed')
-    classify();
-  } else if (key == 4){
-    print('tQuarrel2 plays when key pressed');
-    src = createVideo('./video/tQuarrel2.mp4');
-    src.play();
-    src.volume(0.3);
-  } else if (key == 2){
-    src = createVideo('./video/tLaugh2.mp4');
-    src.play();
-    src.volume(0)
+  // } else if (key == 'c'){
+  //   console.log('classify runs when key pressed')
+  //   classify();
+  // } else if (key == 4){
+  //   print('tQuarrel2 plays when key pressed');
+  //   src = createVideo('./video/tQuarrel2.mp4');
+  //   src.play();
+  //   src.volume(0.3);
+  // } else if (key == 2){
+  //   src = createVideo('./video/tLaugh2.mp4');
+  //   src.play();
+  //   src.volume(0)
   }
 }
 
@@ -156,18 +155,17 @@ function modelReady() {
 
 // Add the current frame from the video to the classifier
 function addExample(label) {
-  // Convert poses results to a 2d array [[score0, x0, y0],...,[score16, x16, y16]]
-  const poseArray = poses[0].pose.keypoints.map(p => [p.score, p.position.x, p.position.y]);
-  if (poseArray) {
-  // Add an example with a label to the classifier
-    knn.addExample(poseArray, label);
-    updateCounts();
-  }
+  // // Convert poses results to a 2d array [[score0, x0, y0],...,[score16, x16, y16]]
+  // const poseArray = poses[0].pose.keypoints.map(p => [p.score, p.position.x, p.position.y]);
+  // if (poseArray) {
+  // // Add an example with a label to the classifier
+  //   knn.addExample(poseArray, label);
+  //   updateCounts();
+  // }
 }
 
 // Predict the current frame.
 function classify() {
-  print('hii, classifying')
   // Get the total number of labels from knnClassifier
   const numLabels = knn.getNumLabels();
   if (numLabels <= 0) {
@@ -227,7 +225,7 @@ function createButtons() {
 // Show the results
 function gotResults(error, result) {
   // Display any error
-    classify();  
+  classify();  
   if (error) {
     console.error(error);
   }
@@ -272,22 +270,22 @@ function setter(x) {
 
 // Update the example count for each label	
 function updateCounts() {
-  const counts = knn.getCountByLabel();
-  select('#example1').html(counts['1'] || 0);
-  select('#example2').html(counts['2'] || 0);
-  select('#example3').html(counts['3'] || 0);
+  // const counts = knn.getCountByLabel();
+  // select('#example1').html(counts['1'] || 0);
+  // select('#example2').html(counts['2'] || 0);
+  // select('#example3').html(counts['3'] || 0);
 }
 
 // // Clear the examples in one label
 function clearLabel(classLabel) {
-  knn.clearLabel(classLabel);
-  updateCounts();
+  // knn.clearLabel(classLabel);
+  // updateCounts();
 }
 
 // Clear all the examples in all labels
 function clearAllLabels() {
-  knn.clearAllLabels();
-  updateCounts();
+  // knn.clearAllLabels();
+  // updateCounts();
 }
 
 // Draw an ellipse on the wrist
@@ -357,14 +355,11 @@ function drawKeypoints() {
 }
 
 function wrist(){
-  console.log('at least wrist works')
-  print(rwx, rwy)
   if (rwx > 710 && rwx < 750 && rwy > 520 && rwy < 550 && cActive == true) {
     pActive = false;
     console.log('握手runs')
     //set a rect as a hint
     if (goin_b){
-      console.log(goin_b)
       timer = frameCount;
     }
     goin_b = false;
@@ -376,7 +371,6 @@ function wrist(){
 
     //set the ellipse timer
     if (remaining < 160) {
-      console.log('time flies')
       // Less than 4 seconds, display progress bar
       fill(255);
       arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
@@ -399,7 +393,6 @@ function wrist(){
     console.log('挥手runs')
     //set a rect as a hint
     if (goin_b){
-      console.log(goin_b)
       timer = frameCount;
     }
     goin_b = false;
@@ -411,7 +404,6 @@ function wrist(){
 
     //set the ellipse timer
     if (remaining < 160) {
-      console.log('time flies')
       // Less than 4 seconds, display progress bar
       fill(255);
       arc(rwx, rwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
@@ -460,7 +452,6 @@ function wrist(){
     console.log('挥手runs')
     //set a rect as a hint
     if (goin_b){
-      console.log(goin_b)
       timer = frameCount;
     }
     goin_b = false;
@@ -472,7 +463,6 @@ function wrist(){
 
     //set the ellipse timer
     if (remaining < 160) {
-      console.log('time flies')
       // Less than 4 seconds, display progress bar
       fill(255);
       arc(lwx, lwy, 75, 75, 0, radians(map(remaining, 0, 159, 0, 360)), PIE);
