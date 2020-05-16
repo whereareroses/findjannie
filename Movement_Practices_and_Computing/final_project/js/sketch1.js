@@ -81,6 +81,8 @@ function draw() {
   drawSkeleton();
 
   if(vidActive){
+    translate(video.width, 0)
+    scale(-1.0, 1.0);
     wrist();
   }
   src.onended(vidEnded);
