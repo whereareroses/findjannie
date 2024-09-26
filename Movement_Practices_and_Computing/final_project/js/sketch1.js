@@ -348,7 +348,7 @@ function wrist(){
       src.play();
       vidActive = false;
     }
-  } else if (lwx > 680 && lwx < 720 && lwy > 570 && ly < 740 && vidActive == true) {    
+  } else if (lwx > 680 && lwx < 720 && lwy > 570 && lwy < 740 && vidActive == true) {    
     // setterRight(2);
     //set a rect as a hint
     if (goin_b){
