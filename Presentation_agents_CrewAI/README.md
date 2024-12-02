@@ -9,7 +9,8 @@
     An automated presentation creation system that leverages AI agents to handle the entire process from research to final compilation. The system uses the Crew AI framework to orchestrate multiple specialized agents that work together sequentially.
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/zW_V57Y89yI?si=Htgi1IJi9WxRNGwJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <a href="https://www.youtube.com/watch?v=zW_V57Y89yI">View Demo</a>
   </p>
 </div>
 
