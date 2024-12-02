@@ -20,19 +20,19 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#📋overview">📋 Overview</a></li>
-    <li><a href="#🛠️built-with">🛠️ Built With</a></li>
+      <a href="#overview">📋 Overview</a></li>
+    <li><a href="#built-with">🛠️ Built With</a></li>
     <li>
-      <a href="#🏃getting-started">🏃 Getting Started</a>
+      <a href="#getting-started">🏃 Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#💬usage">💬 Usage</a></li>
-    <li><a href="#🗂️output-format">🗂️ Output Format</a></li>
-    <li><a href="#📍future-improvements">📍 Future Improvements</a></li>
-    <li><a href="#👩‍💻contributions">👩‍💻 Contributions</a></li>
+    <li><a href="#usage">💬 Usage</a></li>
+    <li><a href="#output-format">🗂️ Output Format</a></li>
+    <li><a href="#future-improvements">📍 Future Improvements</a></li>
+    <li><a href="#contributions">👩‍💻 Contributions</a></li>
   </ol>
 </details>
 
@@ -44,7 +44,6 @@
     <h4>🎯 What I Was Trying to Do</h4>
     You know how making presentations can be a real time-sink? I thought, "What if I could get AI agents to handle this whole process?" So I built a system where different AI agents work together like a well-oiled machine to create presentations from scratch. Pretty neat, right?
     </p>
-    <br>
     <h4>✨ The Cool Stuff It Can Do</h4>
     <li>📚 Does all the boring research for you (thanks, Research Agent!)</li>
     <li>✍️ Writes presentation content that doesn't put people to sleep</li>
@@ -55,7 +54,7 @@
 
 1. <a href="https://docs.crewai.com/introduction">Crew AI</a>: The framework that helps all my agents play nice together
 2. <a href="https://ollama.com/library/llama3.1">Ollama LLM </a>: The brains of the operation (running locally - because who doesn't love local deployment?)
-3. Python & Anaconda: Because Python makes everything better
+3. <a href="https://www.python.org/">Python & Anaconda</a>: Because Python makes everything better
 4. <a href="https://pypi.org/project/duckduckgo-search/">DuckDuckGo Search API</a>: For finding those perfect images
 
 <!-- GETTING STARTED -->
