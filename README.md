@@ -1,21 +1,20 @@
-# Jannie's Persoanl Projects 🚀
+# 🚀 Jannie's Personal Projects
 
-## About Me 👋
+## 👋 About Me 
 
 I'm a product development specialist with 3+ years of experience in end-to-end software development. I love building things I'm passionate about, especially in:
 - AI and Machine Learning
 - API Development
 - Data Analytics
 
-### Technical Skills 💻
+### 💻 Technical Skills 
 - **Languages:** Python, JavaScript, HTML, CSS, SQL, R
 - **Areas:** Full-stack Development, Data Analytics, Product Management, Design
 
----
+## ⭐ Featured Projects 
+<p> These are just some projects I do not have a categorization for, for a full list of all my projects, go to my <a href="https://github.com/whereareroses"> Github Page </a> or <a href = "https://www.janniezhou.com/"> Website</a>.
 
-## Featured Projects ⭐
-
-### 1. Presentation AI Agents
+### 1. <a href = "https://github.com/whereareroses/findjannie/tree/master/Presentation_agents_CrewAI">Presentation AI Agents</a>
 *Built with Crew AI and Python*
 
 An intelligent presentation management system that leverages multi-agent collaboration for dynamic content creation and audience engagement.
@@ -48,7 +47,6 @@ An interactive system for creating dynamic audiovisual performances.
 - Performance-oriented interface
 - Audio-visual synchronization
 
----
 
 ## Let's Connect! 🤝
 
