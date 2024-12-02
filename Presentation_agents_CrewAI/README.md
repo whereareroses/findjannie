@@ -9,10 +9,7 @@
     An automated presentation creation system that leverages AI agents to handle the entire process from research to final compilation. The system uses the Crew AI framework to orchestrate multiple specialized agents that work together sequentially.
     <br />
     <br />
-    <video width="640" height="360" controls>
-    <source src="demo.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-    </video>
+    [![AI Agent Network Demo](https://img.youtube.com/vi/zW_V57Y89yI/0.jpg)](https://www.youtube.com/watch?v=zW_V57Y89yI)
     <a href="https://www.youtube.com/watch?v=zW_V57Y89yI">View Demo</a>
   </p>
 </div>
